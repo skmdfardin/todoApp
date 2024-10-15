@@ -33,4 +33,11 @@ export class TodoRepository implements BaseRepository<Todo> {
     const result = await this.client.del(`todo:${id}`);
     return result === 1;
   }
+  async getAll(): Promise<Todo[]> {
+    const keys = await this.client.keys("todo:*");
+    const todos = await Promise.all(keys.map((key) => this.client.get(key)));
+    return todos
+      .filter((todo): todo is string => todo !== null)
+      .map((todo) => JSON.parse(todo));
+  }
 }

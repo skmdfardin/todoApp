@@ -5,5 +5,5 @@ export interface Todo {
   completed: boolean;
   createdAt: Date;
   updatedAt: Date;
-  taskDueAt: Date;
+  taskDueAt: Date | null;
 }

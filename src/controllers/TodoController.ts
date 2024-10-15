@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { BaseController } from '../interfaces/BaseController';
-import { TodoService } from '../services/TodoService';
-import { Todo } from '../models/Todo';
+import { Request, Response, NextFunction } from "express";
+import { BaseController } from "../interfaces/BaseController";
+import { TodoService } from "../services/TodoService";
+import { Todo } from "../models/Todo";
 
 export class TodoController implements BaseController {
   private service: TodoService;
@@ -27,7 +27,7 @@ export class TodoController implements BaseController {
       if (result) {
         res.json(result);
       } else {
-        res.status(404).send('Todo not found');
+        res.status(404).send("Todo not found");
       }
     } catch (error) {
       next(error);
@@ -42,7 +42,7 @@ export class TodoController implements BaseController {
       if (result) {
         res.json(result);
       } else {
-        res.status(404).send('Todo not found');
+        res.status(404).send("Todo not found");
       }
     } catch (error) {
       next(error);
@@ -56,8 +56,16 @@ export class TodoController implements BaseController {
       if (result) {
         res.status(204).send();
       } else {
-        res.status(404).send('Todo not found');
+        res.status(404).send("Todo not found");
       }
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const todos = await this.service.getAll();
+      res.json(todos);
     } catch (error) {
       next(error);
     }
